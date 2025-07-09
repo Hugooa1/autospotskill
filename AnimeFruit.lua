@@ -1,30 +1,21 @@
--- ✅ โหลด GUI WindUI
-local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+-- ✅ โหลด GUI WindUI (RAW URL สำหรับ Delta)
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/main.lua"))()
 
--- ✅ สร้างหน้าต่าง
+-- ✅ สร้างหน้าต่าง GUI
 local Window = WindUI:CreateWindow({
     Title = "Anime Fruit Auto",
     Icon = "zap",
     Author = "By Poomipad Chaisanan",
     Size = UDim2.fromOffset(500, 400),
-    Transparent = true,
     Theme = "Dark",
-    SideBarWidth = 200,
-    Background = "",
-    BackgroundImageTransparency = 0.42,
-    HideSearchBar = true,
-    ScrollBarEnabled = false,
-    User = {
-        Enabled = true,
-        Anonymous = false,
-        Callback = function() end,
-    },
 })
 
+Window:Notify("✅ โหลดสำเร็จ", "Anime Fruit GUI Loaded", 5)
+
+-- ✅ Tabs
 local Tabs = {
     MainTab = Window:Tab({ Title = "Auto", Icon = "swords" }),
 }
-
 Tabs.MainTab:Section({ Title = "Auto TP & Skill" })
 
 -- ✅ Services
@@ -62,20 +53,20 @@ end
 local buffer = getrenv().buffer or require(game:GetService("ReplicatedStorage"):WaitForChild("buffer"))
 local remote = game:GetService("ReplicatedStorage"):WaitForChild("EventConfiguration"):WaitForChild("Your")
 
--- ✅ Skill Pack (ตัวอย่าง)
+-- ✅ Skill Pack (ใส่เต็มจาก buffer จริงได้)
 local skillArgs = {
     {
         buffer.fromstring("u"),
-        buffer.fromstring("\254\a\000\006\0045098\006\00550981\006\004cast\v>\211\139\197\171?...") -- 🔁 ใส่ string จริง
+        buffer.fromstring("\254\a\000\006\0045098\006\00550981\006\004cast\v>\211\139\197\171?...")
     },
     {
         buffer.fromstring("u"),
-        buffer.fromstring("\254\b\000\006\0045097\006\00550971\006\004cast\v\227a\139...?") -- 🔁 ใส่ string จริง
+        buffer.fromstring("\254\b\000\006\0045097\006\00550971\006\004cast\v\227a\139...")
     },
-    -- เพิ่มอีกตามต้องการ
+    -- เพิ่ม skill ได้ตามต้องการ
 }
 
--- ✅ Auto TP + Skill ระบบหลัก
+-- ✅ Auto TP + Skill ฟีเจอร์หลัก
 local autoCombat = false
 local combatConnection
 
@@ -98,10 +89,8 @@ Tabs.MainTab:Toggle({
 
                 local enemy = getNearestEnemy()
                 if enemy and enemy:FindFirstChild("HumanoidRootPart") then
-                    -- ✅ วาร์ป
                     root.CFrame = enemy.HumanoidRootPart.CFrame * CFrame.new(0, 0, -5)
 
-                    -- ✅ ยิง Skill ทั้งหมด
                     for _, skill in ipairs(skillArgs) do
                         pcall(function()
                             remote:FireServer(unpack(skill))
@@ -113,5 +102,14 @@ Tabs.MainTab:Toggle({
             local root = getHumanoidRootPart()
             if root then root.Anchored = false end
         end
+    end
+})
+
+-- ✅ ปุ่มทดสอบ
+Tabs.MainTab:Button({
+    Title = "Test Button",
+    Icon = "check",
+    Callback = function()
+        Window:Notify("✅ ทดสอบสำเร็จ", "GUI ทำงานปกติ", 3)
     end
 })
