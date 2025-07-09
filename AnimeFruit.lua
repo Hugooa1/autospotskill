@@ -1,10 +1,10 @@
 -- ✅ โหลด WindUI
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 
--- ✅ สร้างหน้าต่าง
+-- ✅ ตั้งค่าหน้าต่าง
 local Window = WindUI:CreateWindow({
     Title = "Anime Fruit",
-    Icon = "zap",
+    Icon = "target",
     Author = "By Poomipad Chaisanan",
     Size = UDim2.fromOffset(500, 400),
     Transparent = true,
@@ -22,7 +22,7 @@ local Window = WindUI:CreateWindow({
 })
 
 local Tabs = {
-    MainTab = Window:Tab({ Title = "Main", Icon = "crown" }),
+    MainTab = Window:Tab({ Title = "Main", Icon = "zap" }),
 }
 
 Tabs.MainTab:Section({ Title = "Auto Combat" })
@@ -35,7 +35,7 @@ local player = Players.LocalPlayer
 -- ✅ ฟังก์ชันหา HRP
 local function getHumanoidRootPart()
     local char = player.Character or player.CharacterAdded:Wait()
-    return char:FindFirstChild("HumanoidRootPart")
+    return char and char:FindFirstChild("HumanoidRootPart")
 end
 
 -- ✅ หา Enemy ที่ใกล้ที่สุด
@@ -61,15 +61,21 @@ local function getNearestEnemy()
     return closestEnemy
 end
 
--- ✅ โหลด buffer & remote
+-- ✅ โหลด Buffer & Remote
 local buffer = getrenv().buffer or require(game:GetService("ReplicatedStorage"):WaitForChild("buffer"))
 local remote = game:GetService("ReplicatedStorage"):WaitForChild("EventConfiguration"):WaitForChild("Your")
 
--- ✅ Skill Pack (เดิมของคุณ)
+-- ✅ Skill Pack (ตัวอย่าง)
 local skillArgs = {
-    { buffer.fromstring("u"), buffer.fromstring("...") },
-    { buffer.fromstring("u"), buffer.fromstring("...") },
-    -- 🔁 เพิ่มตามของจริงคุณทั้งหมด
+    {
+        buffer.fromstring("u"),
+        buffer.fromstring("\254\a\000\006\0045098\006\00550981\006\004cast\v>\211\139\197\171?...") -- เติมจริง
+    },
+    {
+        buffer.fromstring("u"),
+        buffer.fromstring("\254\b\000\006\0045097\006\00550971\006\004cast\v\227a\139...?") -- เติมจริง
+    },
+    -- เพิ่มต่อได้เรื่อย ๆ
 }
 
 -- ✅ เริ่มระบบ Auto TP + Skill
